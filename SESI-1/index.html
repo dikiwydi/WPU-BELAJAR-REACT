@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>belajar react</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- di tulis text/jsx juga bisa,
+        kenapa pakek babel? karna browser secara default tidak mengenali jsx(sintaxz html di dalam javasxript) jadi harus di conmpile menggunakan babel(jangan pakek ketika di produkse)-->
+    <!-- syart jsx ada tiga
+                    - jsx ngerender harus satu elemen saja 
+                    - tag elemen harus di tutup
+                    - nama atribus harus menggunakan camelCase
+        -->
+    <!-- konsep utama pada react (component,props,state)-->
+    <!-- #component
+        -komponen pada react pada dasar nya adalah function javascript 
+        -nama function di awali dengan huruf besar(famel case => const  HomePage())
+        -function mengembalikan elemen ui yang akan di jadikan komponen, di tulis dengan jsx
+        -di panggil tag html saa di render
+    -->
+    <!-- $props -->
+    <!-- kita bisa gunakan compenent beulang kali , tapi kita juga bisa memanggil component ber ulang kembali dengan informasi berbeda cara menggunakan nya menggunakan props,
+    kita juga bisa mengirimkan properti sebagai informasi untuk sebuah komponen, yang di sebut
+    dengan props
+        - props tersebut di tangkap sebagai object saat komponen di buat-->
+    <!-- props refactor
+            -destructuring,ternary operator
+        
+        -->
+    <script type="text/babel" data-presets="react">
+      const container = document.getElementById("root");
+      const root = ReactDOM.createRoot(container);
+
+      function Header({ author }) {
+        return (
+          <>
+            <div className={"flex justify-center p-2 bg-gray-200 rounded"}>
+              <h1 className={"text-3xl font-bold "}>
+                belajar REACT bareng {author ? author : "diwa"}
+              </h1>
+            </div>
+          </>
+        );
+      }
+      function Body() {
+        const mahasiswa = ["diki", "diwa", "wahyu"];
+        return (
+          <>
+            <div className={"flex justify-center p-2 bg-gray-200 rounded"}>
+              <div className={"text-3xl font-bold"}>
+                <ul>
+                  {mahasiswa.map((siswa) => (
+                    <li key={siswa}> saya adalah {siswa}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </>
+        );
+      }
+
+      function Button(props) {
+        const { className, text, type = "submit", children } = props;
+        return (
+          <button
+            {...props}
+            type={type}
+            className={` flex items-center gap-2 text-white bg-blue-300 px-4 py-2 rounded`}
+          >
+            {text || children}
+          </button>
+        );
+      }
+      function HomePage() {
+        const [count, setCount] = React.useState(0);
+        function headerClick() {
+          setCount(count + 1);
+        }
+        return (
+          <div
+            className={
+              " min-h-screen flex justify-center items-center bg-slate-500 gap-4 flex-col"
+            }
+          >
+            <Header />
+            <Header author="diki" />
+            <Body />
+            <Button onClick={headerClick}>klik {count} </Button>
+          </div>
+        );
+      }
+
+      root.render(<HomePage />);
+    </script>
+  </body>
+</html>
